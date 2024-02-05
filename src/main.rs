@@ -14,8 +14,15 @@ struct Args {
     #[arg(
         short, long,
         value_name = "WIDTH",
+        requires("output"),
     )]
     width: Option<u32>,
+
+    #[arg(
+        short, long,
+        value_name = "FILE",
+    )]
+    output: Option<PathBuf>,
 }
 
 fn main() {
@@ -24,7 +31,7 @@ fn main() {
         if let Some(width) = args.width {
             let new_height = width * img.height() / img.width();
             let new_img = img.resize(width, new_height, image::imageops::FilterType::CatmullRom);
-            new_img.save("/tmp/test.png").unwrap();
+            new_img.save(args.output.unwrap()).unwrap();
         } else {
             let (width, height) = img.dimensions();
             println!("Width: {width}, Height: {height}");
