@@ -4,8 +4,12 @@ use image::GenericImageView;
 
 #[derive(Parser, Debug)]
 struct Args {
-    #[arg(short, long)]
-    image: PathBuf
+    #[arg(
+        short, long,
+        value_name = "FILE",
+        required = true,
+    )]
+    image: PathBuf,
 }
 
 fn main() {
