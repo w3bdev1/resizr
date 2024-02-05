@@ -1,5 +1,6 @@
 use std::path::PathBuf;
 use clap::Parser;
+use image::GenericImageView;
 
 #[derive(Parser, Debug)]
 struct Args {
@@ -9,6 +10,10 @@ struct Args {
 
 fn main() {
     let args = Args::parse();
-    let img_path = args.image;
-    println!("{:?}", img_path);
+    if let Ok(img) = image::open(args.image) {
+        let (width, height) = img.dimensions();
+        println!("Width: {width}, Height: {height}");
+    } else {
+        println!("Image not found");
+    }
 }
