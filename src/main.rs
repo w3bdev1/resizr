@@ -15,14 +15,16 @@ struct Args {
         short, long,
         value_name = "WIDTH",
     )]
-    width: Option<i32>,
+    width: Option<u32>,
 }
 
 fn main() {
     let args = Args::parse();
     if let Ok(img) = image::open(args.image) {
         if let Some(width) = args.width {
-            println!("Width: {width}")
+            let new_height = width * img.height() / img.width();
+            let new_img = img.resize(width, new_height, image::imageops::FilterType::CatmullRom);
+            new_img.save("/tmp/test.png").unwrap();
         } else {
             let (width, height) = img.dimensions();
             println!("Width: {width}, Height: {height}");
