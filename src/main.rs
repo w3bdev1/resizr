@@ -31,7 +31,11 @@ fn main() {
         if let Some(width) = args.width {
             let new_height = width * img.height() / img.width();
             let new_img = img.resize(width, new_height, image::imageops::FilterType::CatmullRom);
-            new_img.save(args.output.unwrap()).unwrap();
+            let output_path = args.output.unwrap();
+            match new_img.save(&output_path) {
+                Ok(_) => println!("File saved to: {:?}", output_path),
+                Err(msg) => println!("Error while saving at {:?}: {}", output_path, msg),
+            }
         } else {
             let (width, height) = img.dimensions();
             println!("Width: {width}, Height: {height}");
