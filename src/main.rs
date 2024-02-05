@@ -34,13 +34,13 @@ fn main() {
             let output_path = args.output.unwrap();
             match new_img.save(&output_path) {
                 Ok(_) => println!("File saved to: {:?}", output_path),
-                Err(msg) => println!("Error while saving at {:?}: {}", output_path, msg),
+                Err(msg) => eprintln!("Error while saving at {:?}: {}", output_path, msg),
             }
         } else {
             let (width, height) = img.dimensions();
             println!("Width: {width}, Height: {height}");
         }
     } else {
-        println!("Image not found");
+        eprintln!("Image not found");
     }
 }
