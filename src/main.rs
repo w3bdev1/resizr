@@ -10,13 +10,23 @@ struct Args {
         required = true,
     )]
     image: PathBuf,
+
+    #[arg(
+        short, long,
+        value_name = "WIDTH",
+    )]
+    width: Option<i32>,
 }
 
 fn main() {
     let args = Args::parse();
     if let Ok(img) = image::open(args.image) {
-        let (width, height) = img.dimensions();
-        println!("Width: {width}, Height: {height}");
+        if let Some(width) = args.width {
+            println!("Width: {width}")
+        } else {
+            let (width, height) = img.dimensions();
+            println!("Width: {width}, Height: {height}");
+        }
     } else {
         println!("Image not found");
     }
