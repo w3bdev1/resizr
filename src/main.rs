@@ -1,7 +1,7 @@
 use std::path::PathBuf;
 use clap::{ArgAction, Parser};
 use image::GenericImageView;
-use imgr::{resize, save};
+use resizr::{resize, save};
 
 #[derive(Parser, Debug)]
 #[command(disable_help_flag = true)]
